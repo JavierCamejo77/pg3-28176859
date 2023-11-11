@@ -1,0 +1,23 @@
+<%- include("../../../elementosGlobales/header.ejs") -%> <%-
+include("../../../elementosGlobales/navAdmin.ejs") -%>
+
+<div class="container mt-5">
+  <h2>Editar Categoría</h2>
+
+  <form action="/admin/categoria/editar/<%= datos.id %>" method="post">
+    <div class="form-group">
+      <label for="nombre">Nombre de la Categoría:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="nombre"
+        name="nombre"
+        required
+        value="<%= datos.nombre %>"
+      />
+    </div>
+    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+  </form>
+</div>
+
+<%- include("../../../elementosGlobales/footer.ejs") -%>

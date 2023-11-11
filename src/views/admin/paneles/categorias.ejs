@@ -1,0 +1,33 @@
+<%- include("../../elementosGlobales/header.ejs") -%>
+<%- include("../../elementosGlobales/navAdmin.ejs") -%>
+<div class="container mt-5">
+    <h2>Tabla de Productos</h2>
+    
+    <!-- Botón para agregar un producto -->
+    <a href="/admin/categoria/agregar" class="btn btn-primary mb-3">Agregar categoria</a>
+  
+    <table class="table">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Nombre</th>
+          <th>Acción</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% datos.forEach(function(item) { %>
+          <tr>
+            <td><%= item.id %></td>
+            <td><%= item.nombre %></td>
+            <td>
+              <!-- Agrega aquí los enlaces o botones para las acciones -->
+              <a href="/admin/categoria/editar/<%= item.id %>" class="btn btn-warning btn-sm">Editar</a>
+             <!--  <a href="/eliminar/<%= item.id %>" class="btn btn-danger btn-sm">Eliminar</a> -->
+            </td>
+          </tr>
+        <% }); %>
+      </tbody>
+    </table>
+  </div>
+
+<%- include("../../elementosGlobales/footer.ejs") -%>

@@ -1,0 +1,86 @@
+<%- include("../../elementosGlobales/header.ejs") -%> <%-
+include("../../elementosGlobales/navAdmin.ejs") -%>
+<div class="container mt-5">
+  <h2>Tabla de Productos</h2>
+
+  <!-- Botón para agregar un producto -->
+  <a href="/admin/producto/agregar" class="btn btn-primary mb-3"
+    >Agregar Producto</a
+  >
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+        <th>Orgánico</th>
+        <th>Categoría</th>
+        <th>Acción</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% datos.forEach(function(item) { %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.nombre %></td>
+        <td><%= item.organico %></td>
+        <td><%= item.categoria %></td>
+        <td>
+          <!-- Agrega aquí los enlaces o botones para las acciones -->
+          <a
+            href="/admin/producto/agregar-img/<%= item.id %>"
+            class="btn btn-primary btn-sm"
+            >agregar imagenes</a
+          >
+
+          <a
+            href="/admin/producto/editar/<%= item.id %>"
+            class="btn btn-warning btn-sm"
+            >Editar</a
+          >
+          <button
+            id="<%= item.id %>"
+            class="btn btn-danger btn-sm"
+            onclick="eliminarProducto()"
+          >
+            Eliminar
+          </button>
+        </td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<script>
+  const eliminarProducto = (e) => {
+    const id = document.activeElement.id;
+    const elementoDesaparecer =
+      document.activeElement.parentElement.parentElement;
+
+    const confirmacion = window.confirm(
+      "¿Estás seguro de que deseas continuar?"
+    );
+
+    if (!confirmacion) {
+      return;
+    }
+    console.log(id);
+
+    fetch(`/admin/producto/eliminar/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((response) => {
+        elementoDesaparecer.style.display = "none";
+      })
+      .catch((error) => {
+        console.error("Error al eliminar el producto:", error);
+        alert("Error al eliminar el producto");
+      });
+  };
+</script>
+
+<%- include("../../elementosGlobales/footer.ejs") -%>
