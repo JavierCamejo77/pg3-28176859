@@ -1,0 +1,197 @@
+<%- include("./nav.ejs") -%>
+
+<style>
+  /* Estilos generales para la vista de lista */
+  .list-view {
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* Estilos específicos para cada elemento de producto en la vista de lista */
+  .list-view .card {
+    width: 100%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border: none;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s;
+    flex-direction: row;
+  }
+
+  .list-view .card:hover {
+    transform: scale(1.05);
+  }
+
+  .list-view .card img {
+    width: 100%;
+    max-width: 200px;
+    height: auto;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .list-view .card-body {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+  }
+
+  .list-view .card-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+  }
+
+  .list-view .card-text {
+    font-size: 1em;
+    margin-bottom: 10px;
+  }
+
+  .list-view .btn-primary {
+    margin-top: auto;
+  }
+
+  .list-view {
+    .col-lg-4.col-md-6.mb-4 {
+      width: 100%;
+      flex: 0 0 100%;
+      max-width: 100%;
+    }
+  }
+
+  input[type="text"] {
+    width: 25%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    font-size: 16px;
+    transition: 0.3s;
+  }
+
+  input[type="text"]:focus {
+    border-color: #4CAF50;
+    background-color: #e9f6e9;
+  }
+  
+  @media screen and (max-width: 600px) {
+    input[type="text"] {
+      width: 100%;
+    }
+  }
+</style>
+
+<!-- Contenido de la Página -->
+<div class="container mt-5">
+  <!-- Campo de entrada para la búsqueda -->
+  <div class="input">
+    <input
+      type="text"
+      id="searchInput"
+      placeholder="Buscar por nombre"
+      onkeydown="filtrarElementos('searchInput', '.card-title');"
+    />
+
+    <input
+      type="text"
+      id="descripcion-input"
+      placeholder="Buscar por descripcion"
+      onkeydown="filtrarElementos('descripcion-input', '.card-descripcion');"
+    />
+
+    <input
+      type="text"
+      id="stock-input"
+      placeholder="Buscar por stock"
+      onkeydown="filtrarElementos('stock-input', '.card-stock');"
+    />
+
+    <input
+      type="text"
+      id="precio-input"
+      placeholder="Buscar por precio"
+      onkeydown="filtrarElementos('precio-input', '.card-precio');"
+    />
+
+    <input
+    type="text"
+    id="categoria-input"
+    placeholder="Buscar por categoria"
+    onkeydown="filtrarElementos('categoria-input', '.card-categoria');"
+  />
+  </div>
+
+  <!-- Botón para cambiar de cuadrícula a lista -->
+  <button id="cambiarVistaBtn" class="btn btn-primary mb-3 mt-3">
+    Cambiar Vista
+  </button>
+
+  <!-- Contenido Dinámico -->
+  <div id="productosContainer" class="row">
+    <% data.forEach(function(producto) { %>
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card">
+        <!-- Mostrar solo la primera imagen del producto -->
+        <img
+          src="<%= producto.imagenes[0] %>"
+          class="card-img-top"
+          alt="Imagen del Producto"
+        />
+
+        <!-- Información del Producto -->
+        <div class="card-body">
+          <h5 class="card-title"><%= producto.nombre %></h5>
+          <p class="card-text card-descripcion"><%= producto.descripcion %></p>
+          <p class="card-text card-stock">Stock: <%= producto.stock %></p>
+          <p class="card-text card-precio">Precio: $<%= producto.precio %></p>
+          <p class="card-text card-categoria">
+            Categoría: <%= producto.categoria %>
+          </p>
+        </div>
+        <div class="comprar">
+          <a href="/productos/<%= producto.id %>">
+            <button class="btn btn-success btn-lg btn-block">comprar</button>
+          </a>
+        </div>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>
+
+<script>
+  const productosContainer = document.getElementById("productosContainer");
+  const cambiarVistaBtn = document.getElementById("cambiarVistaBtn");
+
+  cambiarVistaBtn.addEventListener("click", function () {
+    productosContainer.classList.toggle("list-view");
+  });
+</script>
+
+<script>
+  function filtrarElementos(inputId, claseElementos) {
+    const searchInput = document.getElementById(inputId);
+    const elementos = Array.from(document.querySelectorAll(".card"));
+
+    searchInput.addEventListener("input", function () {
+      const searchTerm = searchInput.value.toLowerCase();
+
+      for (const elemento of elementos) {
+        const nombre = elemento
+          .querySelectorAll(claseElementos)[0]
+          .textContent.toLowerCase();
+
+        if (nombre.includes(searchTerm)) {
+          elemento.parentElement.style.display = "";
+        } else {
+          elemento.parentElement.style.display = "none";
+        }
+      }
+    });
+  }
+</script>
+
+<%- include("../elementosGlobales/footer.ejs") -%>

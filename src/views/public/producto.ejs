@@ -1,0 +1,61 @@
+<%- include("./nav.ejs") -%>
+<!-- Contenido de la Página -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-6">
+      <!-- Carrusel de imágenes del producto -->
+      <div id="carruselProducto" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+          <% data.imagenes.forEach(function(imagen, index) { %>
+          <div class="carousel-item <%= index === 0 ? 'active' : '' %>">
+            <img
+              src="/<%= imagen %>"
+              class="d-block w-100"
+              alt="Imagen del Producto"
+            />
+          </div>
+          <% }); %>
+        </div>
+        <a
+          class="carousel-control-prev"
+          href="#carruselProducto"
+          role="button"
+          data-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="sr-only">Anterior</span>
+        </a>
+        <a
+          class="carousel-control-next"
+          href="#carruselProducto"
+          role="button"
+          data-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="sr-only">Siguiente</span>
+        </a>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <!-- Detalles del Producto -->
+      <h2><%= data.nombre %></h2>
+      <p class="lead">Código: <%= data.codigo %></p>
+      <p><strong>Precio: $<%= data.precio %></strong></p>
+      <p>
+        <strong>Disponibilidad:</strong> <%= data.stock > 0 ? 'En stock' :
+        'Agotado' %>
+      </p>
+      <p><strong>Categoría:</strong> <%= data.categoria %></p>
+      <p><strong>Descripción:</strong> <%= data.descripcion %></p>
+      <p><strong>Características:</strong></p>
+      <ul>
+        <li>
+          <strong>Orgánico:</strong> <%= data.organico ? 'Sí' : 'No' %>
+        </li>
+      </ul>
+      <button class="btn btn-primary">Agregar al Carrito</button>
+    </div>
+  </div>
+</div>
+
+<%- include("../elementosGlobales/footer.ejs") -%>
