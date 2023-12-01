@@ -1,4 +1,8 @@
-const { Categoria, Imagenes, Producto } = require("../../model/producto");
+/* const { Categoria, Imagenes, Producto } = require("../../model/producto"); */
+
+const Categoria = require('../../model/producto/Categorias');
+const Imagenes = require('../../model/producto/Imagenes');
+const Producto = require('../../model/producto/Producto');
 
 const productoGet = async (req, res) => {
     try {

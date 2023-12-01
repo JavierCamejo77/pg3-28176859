@@ -1,4 +1,4 @@
-const Categoria = require('../../model/producto/Categorias.js');
+
 const Imagenes = require('../../model/producto/Imagenes.js');
 
 /* vista para actualizar */
