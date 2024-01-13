@@ -1,0 +1,112 @@
+<%- include("../public/nav.ejs") -%>
+
+<style>
+  body {
+    background-image: url("/img/background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Registro de Cliente</h3>
+        </div>
+        <div class="card-body">
+          <form class="form" id="registro" role="form">
+            <div class="form-group">
+              <label for="nombre">Nombre:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="nombre"
+                name="nombre"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Contraseña:</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                required
+              />
+            </div>
+            <input
+              type="hidden"
+              id="g-recaptcha-response"
+              name="g-recaptcha-response"
+            />
+            <button
+              type="button"
+              class="g-recaptcha btn btn-success btn-lg btn-block"
+              data-sitekey="6LfHqEopAAAAAK2ujG5Iqhm7Rsx-j7noIyS12Wl-"
+              data-callback="onSubmit"
+              data-action="submit"
+            >
+              Registrar
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function onSubmit(token) {
+    // Establecer el valor del campo oculto al token de reCAPTCHA
+    document.getElementById("g-recaptcha-response").value = token;
+
+    const nombre = document.getElementById("nombre").value;
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    const gRecaptchaResponse = document.getElementById(
+      "g-recaptcha-response"
+    ).value;
+
+    fetch("/registro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nombre,
+        email,
+        password,
+        "g-recaptcha-response": gRecaptchaResponse,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+    
+       
+        localStorage.setItem("jwt", data.jwt);
+     
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>
+
+<%- include("../elementosGlobales/footer.ejs") -%>

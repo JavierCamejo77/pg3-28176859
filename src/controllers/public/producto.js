@@ -34,7 +34,7 @@ const productoGet = async (req, res) => {
             imagenes: imagenes.map(imagen => imagen.url) // Suponiendo que las imágenes tienen una propiedad 'url'
         };
 
-        console.log(productoTransformado);
+       
 
         // Renderiza el producto en la vista
         res.render("public/producto", { data: productoTransformado });

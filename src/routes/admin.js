@@ -40,4 +40,7 @@ router.get("/producto/agregar-img/:id", adminController.imgsVista)
 
 router.post("/producto/agregar-img/:id", upload.array('img', 4), adminController.imgs)
 
+
+router.get("/compras", adminController.allCompras)
+
 module.exports = router;

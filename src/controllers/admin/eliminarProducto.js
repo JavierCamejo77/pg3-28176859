@@ -2,7 +2,7 @@ const Producto = require("../../model/producto/Producto.js");
 
 const eliminarProducto = async (req, res) => {
     try {
-        console.log('req.params:', req.params);
+  
 
         const { id } = req.params;
 

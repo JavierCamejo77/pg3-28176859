@@ -38,9 +38,9 @@
     </div>
     <div class="col-md-6">
       <!-- Detalles del Producto -->
-      <h2><%= data.nombre %></h2>
+      <h2 id="nombre"><%= data.nombre %></h2>
       <p class="lead">Código: <%= data.codigo %></p>
-      <p><strong>Precio: $<%= data.precio %></strong></p>
+      <p ><strong>Precio: $ <span id="pecio"><%= data.precio %></span></strong></p>
       <p>
         <strong>Disponibilidad:</strong> <%= data.stock > 0 ? 'En stock' :
         'Agotado' %>
@@ -49,13 +49,21 @@
       <p><strong>Descripción:</strong> <%= data.descripcion %></p>
       <p><strong>Características:</strong></p>
       <ul>
-        <li>
-          <strong>Orgánico:</strong> <%= data.organico ? 'Sí' : 'No' %>
-        </li>
+        <li><strong>Orgánico:</strong> <%= data.organico ? 'Sí' : 'No' %></li>
       </ul>
-      <button class="btn btn-primary">Agregar al Carrito</button>
+
+      <button
+        class="btn btn-primary"
+    
+        data-toggle="modal"
+        data-target="#compraModal"
+      >
+        Comprar
+      </button>
     </div>
   </div>
 </div>
 
-<%- include("../elementosGlobales/footer.ejs") -%>
+
+<%- include("./compra/modal.ejs") -%> <%-
+include("../elementosGlobales/footer.ejs") -%>

@@ -2,9 +2,7 @@ const router = require('express').Router();
 
 const { productosGet, productoGet } = require("../controllers/productosController");
 
-router.get("/", (req, res) => {
-    res.render("inicio");
-})
+router.get("/", productosGet)
 
 router.get("/productos", productosGet)
 

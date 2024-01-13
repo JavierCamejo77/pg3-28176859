@@ -1,0 +1,91 @@
+<%- include("../public/nav.ejs") -%>
+
+<style>
+  body {
+    background-image: url("/img/background.webp");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+</style>
+
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header">
+          <h3 class="mb-0">Iniciar Sesión</h3>
+        </div>
+        <div class="card-body">
+          <form
+            class="form"
+            id="login"
+            role="form"
+            action="/login"
+            method="post"
+          >
+            <div class="form-group">
+              <label for="email">Email:</label>
+              <input
+                type="email"
+                class="form-control"
+                id="email"
+                name="email"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="password">Contraseña:</label>
+              <input
+                type="password"
+                class="form-control"
+                id="password"
+                name="password"
+                required
+              />
+            </div>
+
+            <button
+              type="button"
+              class="g-recaptcha btn btn-success btn-lg btn-block"
+              data-sitekey="6LfHqEopAAAAAK2ujG5Iqhm7Rsx-j7noIyS12Wl-"
+              data-callback="onSubmit"
+              data-action="submit"
+            >
+              Iniciar Sesión
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function onSubmit(token) {
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    fetch("/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Success:", data);
+        
+        localStorage.setItem('jwt', data.jwt);
+
+        window.location.href = "/";
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  }
+</script>
+<%- include("../elementosGlobales/footer.ejs") -%>

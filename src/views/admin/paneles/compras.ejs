@@ -1,0 +1,37 @@
+<%- include("../../elementosGlobales/header.ejs") -%> <%-
+include("../../elementosGlobales/navAdmin.ejs") -%>
+
+<div class="container mt-5">
+  <h2>Tabla de Compras</h2>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Cliente</th>
+        <th>descripcion</th>
+        <th>Producto</th>
+        <th>Cantidad</th>
+        <th>Total Pagado</th>
+        <th>Fecha</th>
+        <th>transaccion_id</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% datos.forEach(function(item) { %>
+      <tr>
+        <td><%= item.id %></td>
+        <td><%= item.cliente_id %></td>
+        <td><%= item.description %></td>
+        <td><%= item.producto_id %></td>
+        <td><%= item.cantidad %></td>
+        <td><%= item.total_pagado %></td>
+        <td><%= item.fecha %></td>
+        <td><%= item.id_transaccion %></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</div>
+
+<%- include("../../elementosGlobales/footer.ejs") -%>

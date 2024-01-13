@@ -1,0 +1,74 @@
+<div
+  class="modal fade"
+  id="compraModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="compraModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="compraModalLabel">Formulario de Compra</h5>
+        <button
+          type="button"
+          class="close"
+          data-dismiss="modal"
+          aria-label="Close"
+        >
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"><%- include("./form.ejs") -%></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">
+          Cerrar
+        </button>
+        <button type="button" class="btn btn-primary" id="compraModalBtn">
+          Comprar
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document
+    .querySelector("#compraModalBtn")
+    .addEventListener("click", function (event) {
+  
+      event.preventDefault();
+
+      const paymentData = {
+        amount: document.getElementById("pecio").textContent,
+        description: document.getElementById("nombre").textContent,
+        cardType: document.getElementById("cardType").value,
+        cvv: document.getElementById("cvv").value,
+        expirationMonth: document.getElementById("expirationMonth").value,
+        expirationYear: document.getElementById("expirationYear").value,
+        productId: document.getElementById("productId").value,
+        sessionToken: localStorage.getItem("jwt"),
+      };
+
+   
+
+      fetch("/compra", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentData),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          if (data.error === "token") {
+            window.location.href = "/login";
+          } else {
+            window.location.href = "/";
+          }
+        })
+        .catch((error) => {
+          console.error("Error:", error);
+        });
+    });
+</script>

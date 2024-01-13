@@ -5,9 +5,9 @@ const { actualizarCategoriaVista, actualizarCategoria } = require("./admin/actua
 const { nuevoProductoVista, nuevoProducto } = require("./admin/nuevoProducto");
 const eliminarProducto = require("./admin/eliminarProducto");
 const { actualizarProductoVista, actualizarProducto } = require("./admin/actualizarProducto");
+const { allCompras } = require("./admin/allCompras");
 
-
-const  { imgsVista, imgs }= require("./admin/imgProducto");
+const { imgsVista, imgs } = require("./admin/imgProducto");
 
 module.exports = {
     getProductos,
@@ -21,5 +21,6 @@ module.exports = {
     actualizarProductoVista,
     actualizarProducto,
     imgsVista,
-    imgs
+    imgs,
+    allCompras
 };

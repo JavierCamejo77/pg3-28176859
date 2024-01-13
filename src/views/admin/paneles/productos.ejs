@@ -65,7 +65,7 @@ include("../../elementosGlobales/navAdmin.ejs") -%>
     if (!confirmacion) {
       return;
     }
-    console.log(id);
+
 
     fetch(`/admin/producto/eliminar/${id}`, {
       method: "DELETE",

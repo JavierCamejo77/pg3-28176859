@@ -26,8 +26,6 @@ const productosGet = async (req, res) => {
         };
     }));
 
-    console.log(productosTransformados);
-
     //me los renderizas en la vista
     res.render("public/productos", { data: productosTransformados });
 }

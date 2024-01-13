@@ -17,7 +17,6 @@ const actualizarProducto = async (req, res) => {
         const { id } = req.params; // Supongo que el id del producto que se va a actualizar está en los parámetros de la solicitud
         const { nombre, codigo, precio, descripcion, organico, stock, categoria_id } = req.body;
 
-        console.log({ nombre, codigo, precio, descripcion, organico, stock, categoria_id });
 
         // Suponiendo que tu modelo tiene un método de actualización llamado `update`
         const productoActualizado = await Producto.update({
