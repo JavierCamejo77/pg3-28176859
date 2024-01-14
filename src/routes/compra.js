@@ -3,13 +3,13 @@ const router = express.Router();
 const jwt = require('jsonwebtoken');
 const { JWT, API_URL, API_KEY } = process.env;
 const axios = require("axios");
-
+const ip = require('ip');
 const Compra = require('../model/compra/compra');
 
 router.post('/', (req, res) => {
-    const token = req.headers['x-access-token'];
+    
     const { amount, description, cardType, cvv, expirationMonth, expirationYear, productId, sessionToken } = req.body
-
+console.log("adsfadsfads")
     jwt.verify(sessionToken, JWT, (err, decoded) => {
         if (err) {
             return res.status(401).json({ message: 'Token inválido, por favor inicie sesión de nuevo', error: "token" });
@@ -49,9 +49,10 @@ router.post('/', (req, res) => {
                 // total_pagado
                 // fecha
 
+                console.log(decoded)
                 Compra.create({
-                    cliente_id: decoded.id,
-                    ip_cliente: req.ip,
+                    cliente_id: decoded.userId,
+                    ip_cliente: ip.address(),
                     id_transaccion: response.data.data.transaction_id,
                     producto_id: productId,
                     description: description,
