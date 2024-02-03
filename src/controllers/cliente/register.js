@@ -11,6 +11,8 @@ const getRegister = (req, res) => {
 
 const postRegister = async (req, res) => {
     const { nombre, email, password, 'g-recaptcha-response': captchaResponse } = req.body;
+    console.log("token", JWT);
+    console.log(req.body);
 
     try {
 
@@ -41,10 +43,11 @@ const postRegister = async (req, res) => {
         );
 
         new EmailSend().send(email, 'Bienvenid@ a la tienda', 'Gracias por registrarte en nilo');
-       
+
         res.json({ jwt: token })
 
     } catch (error) {
+        console.error(error);
         res.status(500).json({ error });
     }
 };

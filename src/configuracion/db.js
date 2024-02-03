@@ -6,12 +6,12 @@ const sequelize = new Sequelize({
 });
 
 // Consulta para eliminar la tabla
-/* sequelize.query("DROP TABLE IF EXISTS clientes")
+sequelize.query("DROP TABLE IF EXISTS clientes")
   .then(() => {
     console.log("Tabla eliminada");
   })
   .catch(err => {
     console.error("Error al eliminar la tabla: ", err);
-  }); */
+  });
 
 module.exports = sequelize;
