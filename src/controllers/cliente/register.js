@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const Cliente = require('../../model/usuario/cliente');
 const axios = require('axios');
 const { JWT } = process.env;
+const EmailSend = require('../../configuracion/EmailSend');
 
 const getRegister = (req, res) => {
     res.render("cliente/register");
@@ -19,7 +20,7 @@ const postRegister = async (req, res) => {
                 response: captchaResponse
             }
         });
-      
+
         if (!recaptchaResponse.data.success) {
             return res.status(400).json({ error: 'Invalid reCAPTCHA' });
         }
@@ -39,7 +40,8 @@ const postRegister = async (req, res) => {
             { expiresIn: '1h' }
         );
 
-
+        new EmailSend().send(email, 'Bienvenid@ a la tienda', 'Gracias por registrarte en nilo');
+       
         res.json({ jwt: token })
 
     } catch (error) {
